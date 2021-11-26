@@ -1,0 +1,28 @@
+
+.clock-card {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 250px;
+    background: #222;
+}
+
+.clock {
+    width: auto;
+}
+
+.flip-clock-dot {
+    background: #ccc;
+}
+
+.flip-clock-meridium a {
+    color: #ccc;
+}
+
+.flip-clock-wrapper {
+    width: 550px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

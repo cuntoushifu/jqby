@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/errorpage/css/style.css}">
+  <title>404 - 页面丢失啦</title>
+</head>
+<body>
+  <div class="main-container">
+    <div class="img-container container-item">
+      <img src="./static/404.svg" th:src="@{/errorpage/static/404.svg}">
+    </div>
+    <div class="text-container container-item">
+      <div class="code">500</div>
+      <div class="msg">你查看的页面貌似丢失了呢...</div>
+      <div class="action" onclick="location.href='/'">返回首页,查看更多内容.</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<!-- 导航栏 -->
+<nav th:fragment="header" class="navbar sticky-top navbar-expand-lg navbar-light"
+     style="background-color: #879096;box-shadow: 0px -2px 10px #d0cccc;">
+    <div class="container">
+        <!--标题-->
+        <a class="navbar-brand ">
+            <h1 class="logo-font">
+                后台管理
+            </h1>
+
+        </a>
+        <!--小屏幕下拉响应-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07"
+                aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- 导航  -->
+        <div class="collapse navbar-collapse" id="navbarsExample07">
+            <ul class="navbar-nav mr-auto">
+                <li th:class="${activeUrl=='admin'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/admin}">首页 </a>
+                </li>
+                <li th:class="${activeUrl=='user'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/admin/user/findList/1/10}">用户 </a>
+                </li>
+                <li th:class="${activeUrl=='category'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/admin/categories/blog/1/10}">分类 </a>
+                </li>
+                <li th:class="${activeUrl=='download'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/admin/download/1/10}">资源</a>
+                </li>
+                <li th:class="${activeUrl=='friend'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/admin/friend/1/10}">征婚 </a>
+                </li>
+                <li th:class="${activeUrl=='blog'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/admin/blog/1/10}">博客 </a>
+                </li>
+                <li th:class="${activeUrl=='question'?'nav-item active':'nav-item'}">
+                    <a class="nav-link" th:href="@{/admin/question/1/10}">问答 </a>
+                </li>
+            </ul>
+
+            <!--如果未登录-->
+            <div sec:authorize="!isAuthenticated()">
+                <a class="btn btn-sm btn-primary" th:href="@{/toLogin}" role="button">
+                    <svg class="bi bi-person-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>
+                    登录
+                </a>
+            </div>
+
+            <!--如果已登录-->
+            <div sec:authorize="isAuthenticated()">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a style="color: rgba(0,0,0,.5);text-decoration: none" class="nav-link dropdown-toggle" href="#"
+                           id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            <img th:src="${session.loginUser.getAvatar()}"
+                                 style="width: 30px;height:30px;border-radius: 50%;" alt="">
+                            <span sec:authentication="name"></span>
+                            <!--<span th:text="${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}"></span>-->
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{'/user/'+${session.loginUser.getUid()}}">个人中心</a>
+                            <a class="dropdown-item" th:href="@{'/userinfo/setting/'+${session.loginUser.getUid()}}">更新资料</a>
+                            <a class="dropdown-item" th:href="@{'/user/update-avatar/'+${session.loginUser.getUid()}}">头像上传</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/}">回到前台</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/logout}">注销</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+
+</html>

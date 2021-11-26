@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>资源管理-新华机器博弈</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/adminfontlight.css}">
+    <style>
+        .inner-card {
+            border-top-color: #E4F0FF;
+            border-top-width: 4px;
+        }
+
+        .page-content {
+            margin-top: 30px;
+            margin-bottom: 100px;
+        }
+
+        .inner-card-table {
+            margin-top: 5px;
+            background-color: #FFFFFF;
+        }
+
+        .inner-card-right {
+            border-top-width: 4px;
+            border-top-color: #E4F0FF;
+        }
+
+        .active-code {
+            margin-top: 3px;
+        }
+
+        .card-page {
+            border: none;
+            margin-top: 0px;
+            align-items: center;
+
+        }
+
+    </style>
+</head>
+<body>
+
+<div th:replace="~{common/adminheader::header(activeUrl='download')}"></div>
+
+<main role="main" class="container page-content">
+    <div class="row">
+        <div class="col-md-8 container">
+            <div class="inner-card card">
+                <div class="card-body inner-card-body">
+                    <table class="table table-bordered inner-card-table ">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">资源名</th>
+                            <th scope="col">链接</th>
+                            <th scope="col">提取码</th>
+                            <th scope="col">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item,statu : ${downloads}">
+                            <th scope="row" th:text="${statu.count}">1</th>
+                            <td th:text="${item.dname}">Mark</td>
+                            <td th:text="${item.ddesc}">Otto</td>
+                            <td th:text="${item.dcode}">Otto</td>
+                            <td>
+                                <a type="button" th:href="@{/admin/download/del/{id}/(id=${item.id})}"
+                                   class="btn btn-link small"  onclick="if(!confirm('你确认要删除吗？')) return false;">删除</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation example" class="mt-4">
+                        <ul class="pagination justify-content-center pagination-sm">
+                            <li th:class="${pageParam.hasPrevious()==true?'page-item':'page-item disabled'}">
+                                <a class="page-link"
+                                   th:href="@{'/admin/download/'+${pageParam.getCurrent()-1}+'/10'}"
+                                   tabindex="">Previous</a>
+                            </li>
+                            <li class="page-item" th:if="${pageParam.hasPrevious()}">
+                                <a class="page-link"
+                                   th:href="@{'/admin/download/'+${pageParam.getCurrent()-1}+'/10'}"
+                                   th:text="${pageParam.getCurrent()-1}"></a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link"
+                                   th:href="@{'/admin/download/'+${pageParam.getCurrent()}+'/10'}"
+                                   th:text="${pageParam.getCurrent()}"></a>
+                            </li>
+                            <li class="page-item" th:if="${pageParam.hasNext()}">
+                                <a class="page-link"
+                                   th:href="@{'/admin/download/'+${pageParam.getCurrent()+1}+'/10'}"
+                                   th:text="${pageParam.getCurrent()+1}"></a>
+                            </li>
+                            <li th:class="${pageParam.hasNext()==true?'page-item':'page-item disabled'}">
+                                <a class="page-link"
+                                   th:href="@{'/admin/download/'+${pageParam.getCurrent()+1}+'/10'}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+
+        </div>
+        <aside class="col-md-4 blog-sidebar ">
+            <div class="card inner-card-right">
+                <div class="card-body  ">
+
+                    <form action="/admin/download/add" method="post">
+                        <div class="form-group">
+                            <label for="dname">名称：</label>
+                            <input type="text" class="form-control" name="dname" id="dname"
+                                   placeholder="请输入名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="ddesc">链接：</label>
+                            <input type="text" class="form-control" name="ddesc" id="ddesc"
+                                   placeholder="请输入链接">
+                        </div>
+                        <div class="form-group">
+                            <label for="dcode">提取码：</label>
+                            <input type="text" class="form-control" name="dcode" id="dcode"
+                                   placeholder="请输入提取码">
+                        </div>
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </form>
+
+                </div>
+            </div>
+
+        </aside>
+    </div>
+</main>
+
+<div th:replace="~{common/footer::footer}"></div>
+
+<a class="to-top">返回顶部</a>
+<script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/toTop.js}"></script>
+
+</body>
+</html>
